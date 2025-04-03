@@ -3,71 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Copiar Datos Bancarios</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
-        h2 { color: #2c3e50; }
-        select, button { padding: 10px; margin-top: 10px; font-size: 16px; }
-    </style>
-</head>
-<body>
-    <h2>✅ Datos Bancarios Copiados</h2>
-    <p>Selecciona tu banco para abrir la app o sitio web:</p>
-
-    <select id="banco">
-        <option value="">Selecciona tu banco</option>
-        <option value="bancochile">Banco de Chile</option>
-        <option value="bci">BCI</option>
-        <option value="santander">Santander</option>
-        <option value="scotiabank">Scotiabank</option>
-        <option value="estado">Banco Estado</option>
-        <option value="itau">Itaú</option>
-        <option value="falabella">Banco Falabella</option>
-    </select>
-
-    <br>
-    <button onclick="abrirBanco()">Abrir App o Sitio Web del Banco</button>
-
+    <title>Datos Bancarios de Daniela Aravena</title>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var datosBancarios = "Banco: Falabella\nCuenta: 19998350134\nTitular: Daniela Aravena\nRUT: 16.383.195-3\nTipo de Cuenta: Cuenta Corriente";
+        var datosBancarios = `Banco: Falabella
+Cuenta: 19998350134
+Titular: Daniela Aravena
+RUT: 16.383.195-3
+Tipo de Cuenta: Cuenta Corriente
+Email: amasanderiaagus@gmail.com`;
 
-
-            navigator.clipboard.writeText(datosBancarios).then(() => {
-                alert("✅ Datos bancarios copiados al portapapeles.");
-            }).catch(err => {
-                alert("❌ Error al copiar. Por favor, copia manualmente.");
+        function copiarAlPortapapeles() {
+            navigator.clipboard.writeText(datosBancarios).then(function() {
+                alert("Datos copiados al portapapeles ✅");
+            }).catch(function(err) {
+                alert("Error al copiar los datos ❌");
             });
-        });
+        }
 
-        function abrirBanco() {
+        function compartirWhatsApp() {
+            var mensaje = encodeURIComponent("📌 *Datos Bancarios:*\n\n" + datosBancarios);
+            var url = `https://api.whatsapp.com/send?text=${mensaje}`;
+            window.open(url, "_blank");
+        }
+
+        function redirigirBanco() {
             var bancoSeleccionado = document.getElementById("banco").value;
-            var enlaces = {
-                "bancochile": { app: "bancochile://transferencia", web: "https://www.bancochile.cl" },
-                "bci": { app: "bci://transferencias", web: "https://www.bci.cl" },
-                "santander": { app: "santander://pago", web: "https://www.santander.cl" },
-                "scotiabank": { app: "scotiabank://home", web: "https://www.scotiabank.cl" },
-                "estado": { app: "bancoestado://transferencias", web: "https://www.bancoestado.cl" },
-                "itau": { app: "itau://inicio", web: "https://www.itau.cl" },
-                "falabella": { app: null, web: "https://www.bancofalabella.cl" }
-            };
-
-            if (bancoSeleccionado && enlaces[bancoSeleccionado]) {
-                var enlaceApp = enlaces[bancoSeleccionado].app;
-                var enlaceWeb = enlaces[bancoSeleccionado].web;
-
-                if (enlaceApp) {
-                    window.location.href = enlaceApp;
-                    setTimeout(function() {
-                        window.location.href = enlaceWeb;
-                    }, 2000);
-                } else {
-                    window.location.href = enlaceWeb;
-                }
+            if (bancoSeleccionado) {
+                window.location.href = bancoSeleccionado;
             } else {
-                alert("❌ Selecciona un banco válido.");
+                alert("Selecciona un banco para continuar.");
             }
         }
     </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button, select {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .copiar { background-color: #007bff; color: white; }
+        .whatsapp { background-color: #25D366; color: white; }
+        .banco { background-color: #ff9800; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Datos Bancarios</h2>
+        <pre id="datos-texto">
+Banco: Falabella
+Cuenta: 19998350134
+Titular: Daniela Aravena
+RUT: 16.383.195-3
+Tipo de Cuenta: Cuenta Corriente
+Email: amasanderiaagus@gmail.com
+        </pre>
+        
+        <button class="copiar" onclick="copiarAlPortapapeles()">📋 Copiar Datos</button>
+        <button class="whatsapp" onclick="compartirWhatsApp()">📲 Compartir por WhatsApp</button>
+
+        <h3>Selecciona tu banco</h3>
+        <select id="banco">
+            <option value="">-- Elige un banco --</option>
+            <option value="bancoestado://">Banco del Estado de Chile (App)</option>
+            <option value="https://www.bancoestado.cl/">Banco del Estado de Chile (Web)</option>
+            <option value="bancochile://">Banco de Chile (App)</option>
+            <option value="https://www.bancochile.cl/">Banco de Chile (Web)</option>
+            <option value="scotiabank://">Scotiabank Chile (App)</option>
+            <option value="https://www.scotiabank.cl/">Scotiabank Chile (Web)</option>
+            <option value="bci://">Banco de Crédito e Inversiones (App)</option>
+            <option value="https://www.bci.cl/">Banco de Crédito e Inversiones (Web)</option>
+            <option value="bice://">Banco BICE (App)</option>
+            <option value="https://www.bice.cl/">Banco BICE (Web)</option>
+            <option value="hsbc://">HSBC Bank (Chile) (App)</option>
+            <option value="https://www.hsbc.cl/">HSBC Bank (Chile) (Web)</option>
+            <option value="santander://">Banco Santander-Chile (App)</option>
+            <option value="https://www.santander.cl/">Banco Santander-Chile (Web)</option>
+            <option value="itau://">Banco Itaú (App)</option>
+            <option value="https://www.itau.cl/">Banco Itaú (Web)</option>
+            <option value="security://">Banco Security (App)</option>
+            <option value="https://www.bancosecurity.cl/">Banco Security (Web)</option>
+            <option value="falabella://">Banco Falabella (App)</option>
+            <option value="https://www.bancofalabella.cl/">Banco Falabella (Web)</option>
+            <option value="ripley://">Banco Ripley (App)</option>
+            <option value="https://www.bancoripley.cl/">Banco Ripley (Web)</option>
+            <option value="consorcio://">Banco Consorcio (App)</option>
+            <option value="https://www.bancoconsorcio.cl/">Banco Consorcio (Web)</option>
+            <option value="internacional://">Banco Internacional (App)</option>
+            <option value="https://www.bancointernacional.cl/">Banco Internacional (Web)</option>
+            <option value="btgpactual://">Banco BTG Pactual Chile (App)</option>
+            <option value="https://www.btgpactual.cl/">Banco BTG Pactual Chile (Web)</option>
+        </select>
+        <button class="banco" onclick="redirigirBanco()">🏦 Ir al Banco</button>
+    </div>
 </body>
 </html>
