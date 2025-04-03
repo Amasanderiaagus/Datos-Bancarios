@@ -29,10 +29,26 @@ Email: amasanderiaagus@gmail.com`;
         function redirigirBanco() {
             var bancoSeleccionado = document.getElementById("banco").value;
             if (bancoSeleccionado) {
-                window.location.href = bancoSeleccionado;
+                var partes = bancoSeleccionado.split("|");
+                var appUrl = partes[0];
+                var webUrl = partes[1];
+
+                // Intenta abrir la app primero
+                window.location.href = appUrl;
+
+                // Si la app no se abre en 3 segundos, redirige a la web
+                setTimeout(function() {
+                    window.location.href = webUrl;
+                }, 3000);
             } else {
                 alert("Selecciona un banco para continuar.");
             }
+        }
+
+        function compartirComprobante() {
+            var mensaje = encodeURIComponent("Hola, adjunto el comprobante de la transferencia.");
+            var url = `https://api.whatsapp.com/send?phone=56962550023&text=${mensaje}`;
+            window.open(url, "_blank");
         }
     </script>
     <style>
@@ -61,6 +77,7 @@ Email: amasanderiaagus@gmail.com`;
         .copiar { background-color: #007bff; color: white; }
         .whatsapp { background-color: #25D366; color: white; }
         .banco { background-color: #ff9800; color: white; }
+        .comprobante { background-color: #4CAF50; color: white; }
     </style>
 </head>
 <body>
@@ -81,36 +98,25 @@ Email: amasanderiaagus@gmail.com
         <h3>Selecciona tu banco</h3>
         <select id="banco">
             <option value="">-- Elige un banco --</option>
-            <option value="bancoestado://">Banco del Estado de Chile (App)</option>
-            <option value="https://www.bancoestado.cl/">Banco del Estado de Chile (Web)</option>
-            <option value="bancochile://">Banco de Chile (App)</option>
-            <option value="https://www.bancochile.cl/">Banco de Chile (Web)</option>
-            <option value="scotiabank://">Scotiabank Chile (App)</option>
-            <option value="https://www.scotiabank.cl/">Scotiabank Chile (Web)</option>
-            <option value="bci://">Banco de Crédito e Inversiones (App)</option>
-            <option value="https://www.bci.cl/">Banco de Crédito e Inversiones (Web)</option>
-            <option value="bice://">Banco BICE (App)</option>
-            <option value="https://www.bice.cl/">Banco BICE (Web)</option>
-            <option value="hsbc://">HSBC Bank (Chile) (App)</option>
-            <option value="https://www.hsbc.cl/">HSBC Bank (Chile) (Web)</option>
-            <option value="santander://">Banco Santander-Chile (App)</option>
-            <option value="https://www.santander.cl/">Banco Santander-Chile (Web)</option>
-            <option value="itau://">Banco Itaú (App)</option>
-            <option value="https://www.itau.cl/">Banco Itaú (Web)</option>
-            <option value="security://">Banco Security (App)</option>
-            <option value="https://www.bancosecurity.cl/">Banco Security (Web)</option>
-            <option value="falabella://">Banco Falabella (App)</option>
-            <option value="https://www.bancofalabella.cl/">Banco Falabella (Web)</option>
-            <option value="ripley://">Banco Ripley (App)</option>
-            <option value="https://www.bancoripley.cl/">Banco Ripley (Web)</option>
-            <option value="consorcio://">Banco Consorcio (App)</option>
-            <option value="https://www.bancoconsorcio.cl/">Banco Consorcio (Web)</option>
-            <option value="internacional://">Banco Internacional (App)</option>
-            <option value="https://www.bancointernacional.cl/">Banco Internacional (Web)</option>
-            <option value="btgpactual://">Banco BTG Pactual Chile (App)</option>
-            <option value="https://www.btgpactual.cl/">Banco BTG Pactual Chile (Web)</option>
+            <option value="bancoestado://|https://www.bancoestado.cl/">Banco del Estado de Chile</option>
+            <option value="bancochile://|https://www.bancochile.cl/">Banco de Chile</option>
+            <option value="scotiabank://|https://www.scotiabank.cl/">Scotiabank Chile</option>
+            <option value="bci://|https://www.bci.cl/">Banco BCI</option>
+            <option value="bice://|https://www.bice.cl/">Banco BICE</option>
+            <option value="hsbc://|https://www.hsbc.cl/">HSBC Bank (Chile)</option>
+            <option value="santander://|https://www.santander.cl/">Banco Santander-Chile</option>
+            <option value="itau://|https://www.itau.cl/">Banco Itaú</option>
+            <option value="security://|https://www.bancosecurity.cl/">Banco Security</option>
+            <option value="falabella://|https://www.bancofalabella.cl/">Banco Falabella</option>
+            <option value="ripley://|https://www.bancoripley.cl/">Banco Ripley</option>
+            <option value="consorcio://|https://www.bancoconsorcio.cl/">Banco Consorcio</option>
+            <option value="internacional://|https://www.bancointernacional.cl/">Banco Internacional</option>
+            <option value="btgpactual://|https://www.btgpactual.cl/">Banco BTG Pactual Chile</option>
         </select>
         <button class="banco" onclick="redirigirBanco()">🏦 Ir al Banco</button>
+
+        <h3>Compartir Comprobante</h3>
+        <button class="comprobante" onclick="compartirComprobante()">📤 Enviar Comprobante</button>
     </div>
 </body>
 </html>
