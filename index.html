@@ -85,6 +85,10 @@ numero de cuenta: 1-999-835013-4
     <button class="whatsapp" onclick="compartir('falabella')">📲 Compartir por WhatsApp</button>
   </div>
 
+  <h3>Compartir Comprobante</h3>
+        <button class="comprobante" onclick="compartirComprobante()">📤 Enviar Comprobante</button>
+    </div>
+ 
   <script>
     function copiar(id) {
       const texto = document.getElementById(id + '-texto').innerText;
@@ -101,6 +105,11 @@ numero de cuenta: 1-999-835013-4
       const url = `https://api.whatsapp.com/send?text=${mensaje}`;
       window.open(url, '_blank');
     }
+    function compartirComprobante() {
+            var mensaje = encodeURIComponent("Hola, adjunto el comprobante de la transferencia.");
+            var url = `https://api.whatsapp.com/send?phone=56962550023&text=${mensaje}`;
+            window.open(url, "_blank");
+        }
   </script>
 </body>
 </html>
