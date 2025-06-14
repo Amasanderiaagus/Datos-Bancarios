@@ -97,7 +97,7 @@ Cuenta Vista
 
     function compartir(id) {
       const texto = document.getElementById(id + '-texto').innerText;
-      const mensaje = encodeURIComponent("Datos Bancarios:\n\n" + texto);
+      const mensaje = encodeURIComponent("\n\n" + texto);
       const url = `https://api.whatsapp.com/send?text=${mensaje}`;
       window.open(url, '_blank');
     }
