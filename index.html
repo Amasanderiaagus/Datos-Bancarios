@@ -21,7 +21,7 @@ amasanderiaagus@gmail.com`;
         }
 
         function compartirWhatsApp() {
-            var mensaje = encodeURIComponent(":*\n\n" + datosBancarios);
+            var mensaje = encodeURIComponent("\n\n" + datosBancarios);
             var url = `https://api.whatsapp.com/send?text=${mensaje}`;
             window.open(url, "_blank");
         }
